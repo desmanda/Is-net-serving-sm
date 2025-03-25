@@ -1,0 +1,36 @@
+name: Deploy Model to SageMaker
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment when new code is pushed to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Get Latest isnet Model Checkpoint from S3
+        run: |
+          aws s3 cp s3://trained-models-pytorch/is-net-general/is_net_model.tar.gz is_net_model.tar.gz
+          mkdir model
+          tar -xzf is_net_model.tar.gz
+      - name: tar model and code for sagemaker
+        run: | 
+          tar -czvf model.tar.gz requirements_dev.txt serve.py serving_utils.py models/ isnet-general-use_model.pth
+          aws s3 cp model.tar.gz s3://trained-models-pytorch/is-net-segmentation/
+          
+
+      - name: Deploy Model to SageMaker
+        run: |
+          python deploy_sagemaker.py --s3-model s3://trained-models-pytorch/is-net-segmentation/ --aws-role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/AmazonSageMaker-ExecutionRole'
