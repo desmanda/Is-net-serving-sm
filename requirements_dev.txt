@@ -1,0 +1,9 @@
+scikit-image
+tqdm
+matplotlib
+torch
+torchvision
+torchaudio
+boto3
+sagemaker
+click

@@ -65,7 +65,7 @@ def delete_endpoint_config(endpoint_config_name):
 
 @click.command()
 @click.option('--model-tar-path', default='model.tar.gz')
-@click.option("--aws-role", default='arn:aws:iam::826838947158:role/AmazonSageMaker-ExecutionRole')
+@click.option("--aws-role", default='arn:aws:iam::rrrrrrrr:role/AmazonSageMaker-ExecutionRole')
 @click.option("--instance-type", default='ml.m4.xlarge', help='free instance, otherwise we use ml.m5.large '
                                                            'or GPU based instance depending on the latency')
 @click.option("--endpoint-name", default='is-net-endpoint')
