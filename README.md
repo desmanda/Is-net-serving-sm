@@ -13,14 +13,13 @@ In order to run the pipeline, we need to add the secret ´AWS_ACCOUNT_ID´, ´AW
 as it is accessing a private AWS account. 
 
 # Blockers
-I spent lot of time struggling with sagemaker role, and deployment for testing the model locally before the github 
+I spent time struggling with sagemaker role, and deployment for testing the model locally before the github 
 workflow, somehow the deployment failed when the model.tar.gz is moved to the sagemaker special buckets, I get SSL error. 
-This is not a usual error that I get, it can be due to my new enviroment and AWS account. 
+This is not a usual error that I get, it can be due to my new environment and AWS account. 
 # what I can improve if I have time
 - Adding unit tests with mock to serve.py
 - finish testing the github pipeline
 - Add a workflow for testing the endpoint and deleting it for PRs
-- 
 
 
 
